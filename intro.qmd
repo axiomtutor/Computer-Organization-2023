@@ -1,0 +1,66 @@
+---
+title: "A Companion to Computer Organization"
+subtitle: "Introduction"
+author: "by Adam Frank"
+# chalkboard: 
+#     src: chalkboard.json
+format: 
+    revealjs: 
+        transition: slide
+        transition-speed: slow
+        auto-slide: false # 10000
+        theme: night
+        smaller: false
+        scrollable: true
+        toc: true
+slide-level: 0
+controls: true
+controls-layout: bottom-right
+# slide-tone: true
+incremental: true
+css: style.css
+overflow: auto
+---
+
+# A Companion to Computer Organization
+
+## by Adam Frank
+
+### Introduction to the Video Series
+
+::: {.notes}
+Welcome to a new series on computer organization!
+:::
+
+---
+
+# Content
+
+* A discussion of the content of *Computer Organization and Design* by Patterson and Hennessy, fourth edition.
+* Programming in C and assembly.
+
+::: {.notes}
+This video series will be a companion to the textbook Computer Organization and Design by Patterson and Hennessy.  That means that I will be explaining the text as I read it, and demonstrating various examples and exercises appropriate for each section.  
+
+These exercises will be done in the programming language C, but C is not really the focus -- just the tool for learning computer organization.  Likewise we will see some programming in assembly language.
+:::
+
+---
+
+# Prerequisites
+
+This course will assume basic programming knowledge, and perhaps a "good enough" background in discrete mathematics.
+
+---
+
+# Table of Contents 
+
+Selections from the first seven chapters of the textbook.
+
+1. Abstractions
+2. Instructions
+3. Arithmetic
+4. The Processor
+5. Memory Heirarchy
+6. IO
+7. Multiprocessors

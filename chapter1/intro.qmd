@@ -1,0 +1,366 @@
+---
+title: "A Companion to Computer Organization"
+subtitle: "Foundational Abstractions"
+author: "by Adam Frank"
+# chalkboard: 
+#     src: chalkboard.json
+format: 
+    revealjs: 
+        transition: slide
+        transition-speed: slow
+        auto-slide: false # 10000
+        theme: night
+        smaller: true
+        scrollable: true
+        toc: true
+slide-level: 0
+controls: true
+controls-layout: bottom-right
+# slide-tone: true
+incremental: true
+overflow: auto
+to: revealjs
+---
+
+# A Companion to Computer Organization
+
+## by Adam Frank
+
+### Foundational Abstractions
+
+::: notes
+Welcome to a video series companion to computer organization. In this video we will look at the first chapter and section of the textbook, introducing some of the basic definitions that we will use throughout the rest of this study.
+:::
+
+------------------------------------------------------------------------
+
+# Skipping Ahead
+
+The first section is full of filler.
+
+In fact the first chapter contains a lot that is more "contextual" rather than "substantive".
+
+::: notes
+The first section titled Introduction really doesn't contain much that seems meaninful. I guess it's trying to pump up the reader to get enthusiastic, but maybe it's also just inflating the page count to sell for a larger sticker price. I dunno but either way, I don't have much to say about it -- so I'll skip to the second section.
+
+In fact much of what chapter 1 does is establish a certain amount of context and vocabulary that isn't strictly necessary for the rest of what we study here. It's helpful to keep you oriented, but if you skipped it, then it wouldn't be impossible to understand what we're actually doing in the rest of the course.
+
+Therefore, especially in this chapter, I'm really going to skip a lot of stuff that I see as not extremely interesting.
+:::
+
+------------------------------------------------------------------------
+
+# From Processors to Applications
+
+-   Computer components can be "high level" or "low level".
+    -   "Low level" components are understood at a very foundational level, in terms of their operation on 1s and 0s.
+        -   Processors
+        -   Logic gates
+        -   Memory addresses
+    -   "High level" components are understood in terms that are easy for humans to reason about.
+        -   Browser
+        -   Games
+        -   Text editors
+-   Systems software falls in-between.
+    -   OS
+    -   IO
+    -   Compilers
+
+::: notes
+We often describe computer systems or components by calling them either high-level or low-level. Low-level components are typically very hard to understand, because they are made up of very fundamental but meaningless things, like transistors or logic gates.
+
+At the other end of this spectrum is the high-level. These are things that look and behave just like things that humans are familiar with. For instance, videos and video games, text editors -- all of these are software components that people very easily understand.
+
+In-between there are many software components. These include the operating system, software that handles user input and graphical display, and compilers which take the text of a written program and turn it into binary code.
+:::
+
+------------------------------------------------------------------------
+
+# Binary Numbers
+
+-   A binary number is any number written in base-2. Computers use binary because it can be represented by "on" or "off" for an electric current.\
+-   Zero = $(0)_2$
+-   One = $(1)_2$
+-   Two = $(10)_2$
+-   Three = $(11)_2$
+-   Four = $(100)_2$
+-   ...
+
+::: notes
+A binary number is just like other number, but written in base-2. It will help to contrast this with our familiar base-10 numbers. Note that base-10 numbers are also called decimal numbers. Note also that decimal numbers do not necessarily refer to what we often call the "decimal point" in a number, like when you write 3.141592 and so on. These two ideas are related, but strictly speaking, "decimal number" means a number written with digits in the range from 0 to 9.
+
+Let's say some really obvious things about decimal numbers, so that we can see how they contrast with binary numbers. Base-10 numbers start at 0 and increment to 1 and then 2, and so on up to 9. Something important happens at 9: We run out of digits! And therefore we write a 0 and move to the next position, to the left, and mark a 1.
+
+Base-2 numbers work the same way, except that we just have the smallest possible digit set. We use only 0 and 1. So we start at 0, increment to 1, and after that we've already run out of symbols. So we write a zero, move left, mark a 1.
+
+Because it can be hard to distinguish between the decimal and binary numbers, both written as 10, then we should have some notation to indicate when we're talking in decimal versus binary. There is no universal notation for this, but some people write the binary digits enclosed by parentheses and then with a subscript 2. So that's what I'm doing here.
+
+Continuing the pattern you see on the screen, five is written as 101, and six is 110, and seven is 111, and eight is 1000.
+:::
+
+------------------------------------------------------------------------
+
+# Decimal Numbers
+
+-   Let's say some more obvious things about decimal numbers -- it will help us to say corresponding things about binary, and understand them better. \
+    -   $$ \begin{aligned}359 &= 300 + 50 + 9 \\ &= 3\cdot 100 + 5\cdot 10 + 9\cdot 1 \end{aligned}$$
+        -   The right-most digit is the "ones" digit. Left of that is "tens", left of that is "hundreds".
+        -   These increment by powers of 10. $1=10^0$ to $10 = 10^1$ to $100=10^2$ to $1000=10^3$ ...
+        -   Therefore $$ 359 = 3\cdot 10^2 + 5\cdot 10^1 + 9\cdot 10^0$$
+-   If we reproduce this with base-2, then we can write 1011 as notation for: $$ (1011)_2 = 1\cdot 2^3 + 0\cdot 2^2 + 1\cdot 2^1 + 1\cdot 2^0$$ Which means that $(1011)_2 = 8+2+1 = 11$.
+
+::: notes
+Let's continue saying some things that help us re-imagine what a decimal number is, and see the parallels with binary numbers.
+
+Take for example the number 359, which is three bundles of one-hundred, and five bundles of ten, and 9 units. What is important to realize is that each next magnitude of the bundles increases by a power of ten. This works even for the units and the single bundle of ten, if you recall the exponent rules. Ten to the zero is one -- ten to the one is ten. From there the exponents are more familiar, like ten to the two is one-hundred, and so on.
+
+This gives us a way to represent a base-ten number as a certain kind of expression in terms of powers of ten. The 300 we instead write as 3 times ten to the 2. The 50 we can write as 5 times ten to the one, the 9 is 9 times ten to the 0.
+
+We can therefore do the same thing in binary, and this gives us a scheme for translating binary into decimal. For instance the four-digit binary number 1011 will have powers of two. It will start of course at 2 to the 0, then 2 to the 1, then 2 to the 2, then 2 to the 3. The digits will represent multiples of 0 and 1.
+
+From there you can merely compute this expression to understand what the number is in decimal.
+:::
+
+------------------------------------------------------------------------
+
+# Decimal to Binary
+
+-   Suppose we have some number $5684$ and want to find its binary representation.\
+-   There are multiple strategies. The most intuitive method starts by finding the largest power of 2 less than $5684$.\
+-   $2^{12}=4096$ but $2^{13}=8192$, therefore we take $2^{12}$.\
+-   Find the remainder, $5684-4096=1588$ and do it again. $2^{10}=1024$ but $2^{11}=2048$ so we take $2^{10}$.\
+-   Remainder $1588-1024 = 564$. Take $2^9=512$.
+-   Remainder $564-512=52$. Take $2^5=32$.
+-   Remainder $52-32=20$. Take $2^4=16$.\
+-   Remainder $20-16=4$. Take $2^2=4$.
+-   Remainder $0$, so stop.\
+-   The final result is $$2^{12}+2^{10}+2^9+2^5+2^4+2^2 = (1011000110100)_2$$
+
+::: notes
+Just as we want to know how to translate binary to decimal, we will need to know how to translate decimal to binary. There are at least a couple good ways to do this, but I will only show the most intuitive one here. This one proceeds by an algorithm that strongly resembles how you divide numbers.
+
+For example take the decimal number 5684. We will try to find the largest power of 2 which is less than 5684. This involves the painful process of computing all the powers of 2 that you might need, but of course if you do this a few times you eventually get fast at it. Generating the next power of 2 is relatively easy, and you'll keep using the same ones as you do this, so that you tend to remember them.
+
+They are 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192. We can see that this last one is too large for our purposes, so we start with 4096 which is 2 to the 12.
+
+Now that we've represented a quantity this big, but it's still not all of 5684, then we need to further represent the remaining quantity. The remainder is 5684-4096, which is 1588. And we recursively perform the algorithm on this number.
+
+The largest power of 2 which is not bigger than 1588 is 10, so we take the number 2 to the 10 which is 1024. Again we compute a remainder, and recursively apply the algorithm.
+
+In the end we have decided to take the powers 12, 10, 9, 5, 4, and 2. Therefore we will write 13 digits corresponding to the powers of 2 from 0 to 12. Whichever power we have kept will have a digit of 1, and any that is missing will have a digit 0.
+
+You can see here the final result.
+
+There is another algorithm for computing the conversion from decimal to binary, which proceeds from the ones digit up to the largest digit. It requires computing the number modulo 2 and doing bit shifts, and so on -- if anyone wants to see this algorithm implemented, leave a comment. I cannot promise how long it will take me to make such a video, and if it is during my busy season it may take quite a while. But if you're patient then I can fill certain reasonable requests.
+:::
+
+------------------------------------------------------------------------
+
+# Machine and Assembly Languages
+
+-   Machine language is just written in binary numbers, and represents the state of the hardware at a given moment.
+-   Assembly language is the first abstraction which takes us one small step toward the higher level. It is symbolic and not binary, but it directly talks about machine language.
+-   A computer might have an "adder" which is a function that adds two binary numbers. This adder is itself a binary number (since everything in the computer is represented in binary!). Maybe it is represented in machine language as $$1000110010100000$$ In assembly, we might symbolically represent this as `add A.B`.
+
+::: notes
+Machine language is a computer language which consists of binary numbers, used to represent the state of a computer's hardware. It is painful to work in, since it is approximately the lowest level there is, but of course some pain is necessary in a good life.
+
+Assembly is the natural abstraction of machine language into some of the most pervasive operations that one does on machine code. For instance, we frequently add numbers and therefore write `add A.B` instead of whatever its machine language equivalent might be. Assembly is very close to machine language, but it is at least a helpful layer of abstraction, one step up from the lowest level of hell.
+:::
+
+------------------------------------------------------------------------
+
+# Higher and Higher Levels
+
+-   The move from machine to assembly language represents the first step toward high-level software.
+-   Eventually, we build programming languages which are even higher-level, and translate down to assembly -- which is, as we've said, also translated down to machine.
+
+::: notes
+Of course the layers of abstraction keep going up into more and more easily understood languages. A programming language such as C is even more readable than assembly, and a language like Python is more readable than C, and it is at least possible to have an even more readable language than Python. We cannot completely take natural human language and automate the process of turning it into code -- at least not in a flawless way, because human language is intrinsically imprecise and changing. This always introduces ways of expression which make sense in natural language, but which do not correspond uniquely to a computer program. So if we are half-decent programmers we will always need to be able to speak and write in some formal computer language -- AI might be able to do a lot, but I am very inclined to think that it will never do everything.
+
+And yeah, I can still say that even with everything that we've seen in 2023. AI is impressive, but only in the sense that it can represent back to us, some of the best things that humanity has ever created. It is not very skilled at making something very new, or better than what humanity has previously created. It tries, but seems not to be able to do better than randomly smashing together two old ideas. So don't quit your programming career just yet!
+:::
+
+------------------------------------------------------------------------
+
+# Hardware Abstractions
+
+-   So far we have talked about software abstractions -- now we think about some hardware abstractions. (Section 1.3 "Under the Covers")
+    -   Input
+        -   Keyboard
+        -   Mouse
+        -   Microphone
+        -   Camera
+    -   Output
+        -   Screen pixels
+        -   Speaker
+        -   Haptic
+        -   Printer
+    -   Memory
+        -   Cache
+        -   RAM
+        -   Hard drive
+    -   Datapath
+    -   Control
+
+::: notes
+Here is a very brief summary of various hardware abstractions: Input, output, memory, datapath, and control. Input is how the state of the computer is made to change, in a way other than the computer just doing its own thing. So if you want to watch a movie, you have to somehow tell the computer which movie to play. Any way in which information outside the computer gets inside, is called input.
+
+Of course output goes in the other direction. It's the movie playing on the screen, the audio -- on modern mobile devices there's also haptic feedback like how the phone can vibrate -- and so on.
+
+Memory is the information stored internally somehow. The movie lives in the computer somewhere right? But there are other kinds of memory, too. A movie would typically be stored in long-term memory, like the hard-drive. But hard-drives are slow, and typically graphical stuff needs to be very fast in order for it to be satisfying for a human viewer. Therefore when you play a movie, pieces of it are moved over to a faster-acting kind of memory, called RAM. And yet even RAM is not the fastest kind of memory -- at the actual moment of computation, you need something lightening fast, and this is accomplished by the cache.
+
+More on this later, but for now it's enough to know that there are different kinds of memory, distinguished by the materials they are made out of as well as the systems by which they represent information.
+
+Then there are the datapath and control. These are components that most people have not encountered.
+:::
+
+------------------------------------------------------------------------
+
+# The CPU
+
+-   The processor is called the CPU.
+-   It is made up of the data path and control.
+    -   The datapath does the computations.
+    -   The control directs where the information comes from and where it goes out to.
+
+::: notes
+The datapath is the part of the processor which actually performs computations. The control is the part of the processor which directs information into the datapath, and then carries it back out when the computation is done. The control is what reads and writes between the cache and RAM.
+:::
+
+------------------------------------------------------------------------
+
+# Abstraction
+
+-   Abstraction is the removal of details in order to have a more understandable and general description.
+-   We have the abstract concept of an animal, rather than a mere list of every animal species. We have the abstraction of a machine, rather than specifying whether it is steam- or electricity-driven.
+-   Assembly abstracts machine language.
+-   The processor abstracts the bundle of datapath, control, and cache.
+-   The architecture of a computer is the abstract interface between hardware and the lowest-level software.
+    -   It's the way that a programmer can talk to the hardware, while still writing code rather than a soldering tool.
+
+::: notes
+It may be worth taking a moment to say just what abstraction is. This is a concept that almost every computer science course uses over and over again, so let's try to say just what it is.
+
+Broadly speaking, abstraction is the act of ignoring details in order to get a manageable big picture. This is what we saw already as we went from machine to assembly language. There are other natural examples like the abstract concept of an animal, which ignores exactly which species one might be referencing -- or even which particular individual animal we might be discussing.
+
+In a similar way, the processor is the abstraction of the package of datapath and control and cache.
+
+Likewise we will now introduce another abstraction, which is the architecture. This is the abstract interface between the hardware and the lowest-level software. For instance, the architecture will describe how assembly code can emit a signal to a speaker in order to emit some sound.
+:::
+
+------------------------------------------------------------------------
+
+# Architecture
+
+-   Most programmers do not often work at the architecture level -- it is too low-level for most people to regularly inhabit.
+    -   A normal high-level programmer will, however, occasionally do so.
+-   The OS often does the work of interfacing with the low-level, so that a high-level programmer doesn't have to.
+    -   The interface that a given OS gives to interface with the instruction set, is the ABI (Application Binary Interface).
+-   An architecture is still an abstraction -- like a strategy or concept for how to interface with the hardware. Therefore a single architecture can be actually, concretely implemented in different ways.
+
+::: notes
+Because the architecture of a computer is still very low-level, most programmers don't live here. However, they visit often, at least in a sense. Frequently a normal programmer will use the operating system to provide an interface to the architecture, called the ABI or application binary interface.
+
+But keep in mind the difference between the ABI and the architecture. The ABI is given by the OS and is a specific program that uses the architecture. The architecture is an abstract idea, like a strategy for how to interface with the hardware. The architecture is independent of the OS.
+:::
+
+------------------------------------------------------------------------
+
+# Memory
+
+-   The fastest memory is cache memory.
+    -   It depends on physical principles, which determines that when the power is turned off, the memory is lost.
+    -   We call this memory "volatile".
+-   Hard drives work with RAM, or ROM, or perhaps some other systems.
+    -   These are non-volatile.
+
+::: notes
+To say a little more about computer memory, most computers have at least three kinds of memory. A computer scientist will talk about memory just as a concept -- it's just the idea of information being stored and represented in some place.
+
+On the other hand, in industry and retail, the word "memory" is often a synonym for RAM which is a very specific kind of memory. But still people just refer to it by the imprecise word "memory".
+
+But other kinds of memory include ROM and the cache. The cache is expensive, fast, small, and volatile. Expensive is measured in dollars per byte, fast is measured in operations per second, small measured in bytes. Volatile means that, when the power to the computer is off, the cache no longer stores the information.
+
+The hard drive usually stores RAM which is Random Access Memory. It is less expensive, slower, larger, and non-volatile.
+
+There is also ROM, which is even less expensive than RAM, slower, larger, and also non-volatile.
+:::
+
+------------------------------------------------------------------------
+
+# Memory Measurements
+
+-   We measure size and speed. Fornow we focus on size.
+-   Size in bits, bytes, and gigabytes.
+-   A bit is a single 0 or 1.
+-   A byte is 8 bits.
+-   "Giga" means "a lot".
+    -   Depending on who you ask, it's $2^{30}$ bytes or $10^9$ bytes.
+    -   They are approximately equal and therefore real computer scientists are not interested in these provincial disputes!
+    -   ![](images/tuxedopooh.webp)
+
+::: notes
+Memory is often packaged into groups of 8 bits, called a byte. This allows us to represent numbers in the range from 0 to 2 to the 8. 2 to the 8 is the same as 256, so the largest number we can represent with a byte is 255.
+
+Most devices today have an amount of long-term memory that is best measured in gigabytes. A gigabyte just means "a lot". Originally this was taken to mean 2 to the 30, but some people today define it as 10 to the 9. These two numbers are approximately equal, and so for the purposes of computer science, the difference is not interesting. Just pick a definition and live with it.
+:::
+
+------------------------------------------------------------------------
+
+# Networks
+
+-   A network is any two or more computers sending IO signals to each other.
+
+-   This involves some kind of shared memory.
+
+    -   One computer can write to another's memory.
+
+    -   They can jointly edit a shared database.
+
+    -   What's the difference?
+
+        -   The only "real" difference is ownership. So in a sense the difference is in the law.
+
+        -   There can be an important difference in how many times the data has to get copied, and over what distance the information has to travel.
+
+        -   More copies and more distance usually increases the risk of transmission errors.
+
+-   LANs (Local Area Networks) are usually housed in a single building, office, or other restricted space.
+
+    -   Because the space can be controlled physically, it makes more sense to allow greater permissions for reading and writing information.
+
+    -   An example could be the connection between your computers at home.
+
+-   WANs (Wide Area Networks) are distributed over less controlled space, often over entire countries. This includes the internet but others are possible, like a network connecting government or large corporation computers.
+
+::: notes
+We now zoom out to consider not just one computer, but multiple computers communicating with each other. This is called a network. The simplest picture to have in your mind is to have two computers, and one of them can read and write the memory of the other. It then let's go, and the second computer can now see what the first one did.
+
+Other strategies are possible too, like the two computers having shared memory. But in fact, this isn't really that different in concept. Even when the first computer reads and writes to the second computer's memory, there is a sense in which -- at that moment -- the two computers are sharing that piece of memory. When the first computer relinquishes control and the second one takes back over its memory, they just completed a sort of exchange.
+
+The only thing that's different if the two computers share a third piece of memory, is the picture of who owns what memory, how many times the same information is copied to different devices, and perhaps how far the signals have to be sent. This can be important in practice, since extra copies and farther distances will drive up the risk of transcription errors.
+
+We usually distinguish between to broad categories of networks. The first is a LAN, local area network. As the name suggests, with this there is some kind of relatively small area where the various computers are connected together. Exactly what you call local can be to taste, like a single building or building complex.
+
+Because you can control the physical space of a confined region, LANs tend to allow greater computer permissions -- in effect, moving some of the obligation for safety to the physical world, rather than having firewalls or other safety measures that you might want when you connect to a WAN.
+
+By contrast WANs, wide area networks, tend to be distributed over such a large area that nobody could reasonably police the physical infrastructure of the communication. This is usually at the scale of anything larger than a city. The internet is one example of a WAN but you could have other infrastructure, like a nation-wide network for specifically military computers, or something like that.
+:::
+
+------------------------------------------------------------------------
+
+# Transistors
+
+-   The fundamental technology upon which modern computers are based, is the *transistor*.
+
+    -   The exact way that a transistor works and is built, is a matter of state and corporate secrets. Therefore we must take their behavior for granted and not ask too many questions.
+
+    -   But fundamentally they are tiny devices, able to represent on-or-off state.
+
+    -   They can be switched on-to-off or off-to-on, by passing an electrical current through a circuit.
+
+-   A computer *chip* is a bundle of transistors assembled together on a physical device and interacting with each other.
+
+::: notes
+:::
