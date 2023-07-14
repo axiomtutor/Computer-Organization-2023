@@ -102,7 +102,7 @@ Continuing the pattern you see on the screen, five is written as 101, and six is
 
 # Decimal Numbers
 
--   Let's say some more obvious things about decimal numbers -- it will help us to say corresponding things about binary, and understand them better. \
+-   Let's say some more obvious things about decimal numbers -- it will help us to say corresponding things about binary, and understand them better.\
     -   $$ \begin{aligned}359 &= 300 + 50 + 9 \\ &= 3\cdot 100 + 5\cdot 10 + 9\cdot 1 \end{aligned}$$
         -   The right-most digit is the "ones" digit. Left of that is "tens", left of that is "hundreds".
         -   These increment by powers of 10. $1=10^0$ to $10 = 10^1$ to $100=10^2$ to $1000=10^3$ ...
@@ -362,5 +362,26 @@ By contrast WANs, wide area networks, tend to be distributed over such a large a
 
 -   A computer *chip* is a bundle of transistors assembled together on a physical device and interacting with each other.
 
+<!--# Test commenting -->
+
 ::: notes
+We now go in the opposite direction from networks, and zoom far deep into the internals of a computer. In fact, down to a very fundamental physical level, the transistor. We always talk about 0s and 1s but only now do we say just how that is physically accomplished. The answer is in an electrical device called a transistor, which today is so microscopic that it is impossible to fully conceive. These objects are now getting down the scale of single atoms.
+
+In fact the precise physical nature of transistors is a jealously guarded secret, by states and corporations. Therefore we can only study them at the level of abstraction where we understand their basic behavior. In short they can either be in an on or off state, and this state can be changed by passing through it an electrical current.
+
+Finally, a computer chip is a single piece of hardware which bundles together many interconnected transistors -- the interconnections between the transistors give the chip behaviors that we recognize as addition, multiplication, and other operations that we can recognize and will study in depth later.
+:::
+
+------------------------------------------------------------------------
+
+# Summary and To Come
+
+In this video we have reviewed, *very* briefly, the content of the textbook from sections 1.1 to 1.3. This has mostly introduced vocabulary and concepts to orient you to the entire field of computing and computer science.
+
+In the next video we will look at sections 1.4 through 1.6, which is concerned with the performance of some of the devices that we have discussed here. That is to say, mostly we will be discussing speed.
+
+::: notes
+So this was the first three sections of the textbook, mostly introducing the objects and concepts that we'll study -- perhaps even in more depth, in a few cases, than we really need. But in any case, we now have a brief survey of the land.
+
+Next up we'll introduce the basic ideas of measuring the performance of devices for memory and computation, which means defining and measuring speed.
 :::
