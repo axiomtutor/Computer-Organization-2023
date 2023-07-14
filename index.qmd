@@ -1,0 +1,4 @@
+# Index of Presentations
+
+1. [Introduction to the Series](intro.qmd)
+2. [Fundamental Abstractions](chapter1\fund_abst.qmd)

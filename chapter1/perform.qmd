@@ -1,0 +1,194 @@
+---
+title: "A Companion to Computer Organization"
+subtitle: "Measuring Performance"
+author: "by Adam Frank"
+# chalkboard: 
+#     src: chalkboard.json
+format: 
+    revealjs: 
+        transition: slide
+        transition-speed: slow
+        auto-slide: false # 10000
+        theme: night
+        smaller: true
+        scrollable: true
+        toc: true
+slide-level: 0
+controls: true
+controls-layout: bottom-right
+# slide-tone: true
+incremental: true
+overflow: auto
+to: revealjs
+---
+
+# A Companion to Computer Organization
+
+## by Adam Frank
+
+### Measuring Performance
+
+::: notes
+Welcome to a video series companion to computer organization. In this video we will continue looking at the first chapter of the textbook, sections 1.4 to 1.6, which are thematically on the topic of performance.
+:::
+
+------------------------------------------------------------------------
+
+# Speed of a computer
+
+## Performance and Response Time
+
+-   One way to measure the speed of a computer is the time that it takes to complete a task. This is called the computer's **response time**.
+-   It's not terribly well-defined because this measurement can change a lot depending on the task.
+-   Notice the units of this measurement: time per task.
+    -   If you want to say that a single task is measured in the unit \[c\], and we measure time in seconds \[s\]
+    -   then this unit of measurement is \[s\]/\[c\]
+-   The reciprocal of this is **performance**.
+
+------------------------------------------------------------------------
+
+## Throughput
+
+-   Another way to measure the speed of a computer is the number of tasks performed in unit time. This is called **throughput**.
+-   But this is just the inverse (i.e. reciprocal) of the previous measurement. It has units \[c\]/\[s\]!
+-   The textbook suggests, indirectly, that there is a deeper difference between throughput and response rate, but they don't quite communicate what that distinction is.
+-   For most computer scientists, though, the textbook's definition is not the right way to define throughput.
+    -   The word "throughput" is usually meant as a measure of data flow over a network and not a single computer.
+    -   Therefore, yes, there is a big difference in response time and throughput -- but the textbook does not make this clear, or doesn't make it it clear in the right way.
+
+------------------------------------------------------------------------
+
+# Comparing Performance
+
+The ways to compare performance are just the obvious ones. You can compute the difference in their performance, or you can take their ratio.
+
+The book calls this latter the **relative performance** One computer is twice as fast as another one, if $$\frac A B = 2$$
+
+where *A* is the performance of the first computer and *B* is the performance of the second.
+
+It might help to realize that this equation is equivalent to $A = 2B$ so that this more literally "says" that *A* is twice *B*.
+
+------------------------------------------------------------------------
+
+# Measurement
+
+-   A single processor may be trying to perform computations for several different programs.
+
+    -   Suppose there are three programs A, B, C. If the computer is trying to make all three simultaneously useful then it may compute tasks from each in a cycle: A, B, C, A, B, C, ...
+
+    -   In some cases, it can make more sense for the processor to give one program more computations than another, so that instead it computes something more like A, C, A, B, C, A, A, B, ... in whatever sequence the processor has deemed optimal.
+
+    -   Therefore measuring the time that the computer takes to perform the tasks demanded by program A, cannot be easily and purely measured.
+
+        -   You cannot merely run a task for program A, and measure the time until it completes. The elapsed time from the start to the end of the task, will include time spent by the processor performing tasks for B and C.
+
+-   It's not always clear to the user, which programs are running. Sometimes the processor is busy with moving memory around, sometimes the operating system is performing necessary functions hidden to the user.
+
+    -   Therefore one cannot fix this problem merely by shutting down all other visible programs before running the text.
+
+------------------------------------------------------------------------
+
+# CPU Time
+
+-   **CPU time** for a task, is the time that the CPU spends doing computations needed *only* for that task and not for anything else.
+
+    -   But importantly, CPU time *does* include the time spent on the OS if those computations are on behalf of the task. This part of CPU time is called **system CPU time**.
+
+    -   The part of CPU time spent only on computations directly requested by the task, is called the **user CPU time**. (The "user" is the task.)
+
+-   "system performance" will refer to net elapsed time, and "user CPU time" for user CPU time. 😛
+
+------------------------------------------------------------------------
+
+# The Processor Clock
+
+-   Almost every processor has a built-in clock that ticks out at a reliable rate -- often somewhere in the range of 250 picoseconds. Call this time the **clock cycle** and denote it by the symbol *t*.
+
+-   The computer cannot measure time directly, but can measure the number of ticks that go by during the run of the program. Say that $n$ is the number of ticks during the run of a program.
+
+-   Then the elapsed time, *e*, for a program is\
+    $$e = nt$$
+
+------------------------------------------------------------------------
+
+# Instruction Performance
+
+-   If you want to compare two computers, it can make sense to see which one performs instructions faster -- after all, a program just is a sequence of instructions.
+
+-   Therefore let us form an equation which uses the average clock cycles per instruction (**CPI**).
+
+    $$ \frac n i = (CPI) $$
+
+    where as before $n$ is the number of clock cycles. $i$ is the number of instructions a program gives during its run, and of course $(CPI)$ is the cycles per instruction.
+
+-   This equation is equivalent to $$n = i (CPI)$$
+
+    which is the version given in the textbook (but with different names for variables).
+
+-   For a fixed program, $i$ will not change. But for two different computers, the $(CPI)$ is a useful indicator of which one is faster.
+
+------------------------------------------------------------------------
+
+# The Classic CPU Equation
+
+-   We now combine the two equations from earlier.
+
+    $$
+    e=nt
+    $$
+
+    $$
+    \frac n i = (CPI)
+    $$
+
+-   Both equations involve $n$ and therefore can be solved for $n$.
+
+    $$
+    n = \frac e t = i(CPI)
+    $$
+
+-   If you multiply the $t$ to the other side, you get the first equation in the textbook.
+
+    $$
+    e = it(CPI)
+    $$
+
+-   $t$ is the time per cycle. Its inverse is the **clock rate**, which I'll denote by *r*. Then
+
+    $$
+    e = \frac{i(CPI)}{r}
+    $$
+
+-   The value of this equation is that it is clear that we want to minimize $e$, and the equation shows that we can do so by
+
+    -   Minimizing $i$, the number of instructions in the program. This is the job of writing good *algorithms*.
+
+    -   Minimizing $(CPI)$, which is the job of making a good processors.
+
+    -   $r$ is unimportant since it is the time per cycle. As such it's mostly just a unit of measurement of time. If you change the unit of measurement, you don't change the quantity that you're actually measuring.
+
+        -   Of course you may wonder "But numerically, if you increase the number $r$ that means that $e$ decreases. So $r$ must actually matter, right?"
+
+        -   If you increase $r$, the cycles per unit time, then you also increase $(CPI)$ the cycles per instruction. So these balance out.
+
+------------------------------------------------------------------------
+
+# Instruction Mix
+
+The $(CPI)$ measurement of course involves an average -- the average number of cycles per instruction. However, there are many different kinds of instructions, some requiring more time to compute than others. And if you have two different programs, one of them may happen to require more of the slower instructions. The **instruction mix** of a program is the number of each kind of instruction it requires.
+
+Therefore a more honest measurement would divide up the different kinds of instructions. One would want to count the number of each kind of instruction in a program, and the cycles required for each kind. With this one can compute a weighted average which gives a better representation of the number of cycles per instruction.
+
+------------------------------------------------------------------------
+
+# Power
+
+Without going into the details: Circuits are made of transistors, and transistors are made of semiconductor materials. The amount of electrical power consumed by a computer circuit is determined by some physics that is not interesting for our current purposes -- but what you do need to know is that a given material (the semiconductor) has an intrinsic capacitive load.
+
+Moreover, a voltage is applied to the circuit in order to switch a transistor. And of course a transistor may be switched repeatedly. If we write $P,C,V,f$ for the power consumed, capacitive load, voltage applied, and frequency of switching, then these are related by the equation
+
+$$
+P=CV^2 f
+$$
+
+------------------------------------------------------------------------
