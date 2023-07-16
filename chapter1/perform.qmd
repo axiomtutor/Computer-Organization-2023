@@ -183,9 +183,9 @@ Therefore a more honest measurement would divide up the different kinds of instr
 
 # Power
 
-Without going into the details: Circuits are made of transistors, and transistors are made of semiconductor materials. The amount of electrical power consumed by a computer circuit is determined by some physics that is not interesting for our current purposes -- but what you do need to know is that a given material (the semiconductor) has an intrinsic capacitive load.
+* Circuits are made of transistors, and transistors are made of semiconductor materials. The amount of electrical power consumed by a computer circuit is determined by some physics that is not interesting for our current purposes -- which is a skillful way of not having to confess that I don't understand this physics!
 
-Moreover, a voltage is applied to the circuit in order to switch a transistor. And of course a transistor may be switched repeatedly. If we write $P,C,V,f$ for the power consumed, capacitive load, voltage applied, and frequency of switching, then these are related by the equation
+* Moreover, a voltage is applied to the circuit in order to switch a transistor. And of course a transistor may be switched repeatedly. If we write $P,C,V,f$ for the power consumed, capacitive load, voltage applied, and frequency of switching, then these are related by the equation
 
 $$
 P=CV^2 f
