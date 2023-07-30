@@ -39,34 +39,48 @@ Welcome to a video series companion to computer organization. In this video we w
 ## Performance and Response Time
 
 -   One way to measure the speed of a computer is the time that it takes to complete a task. This is called the computer's **response time**.
--   It's not terribly well-defined because this measurement can change a lot depending on the task.
--   Notice the units of this measurement: time per task.
-    -   If you want to say that a single task is measured in the unit \[c\], and we measure time in seconds \[s\]
-    -   then this unit of measurement is \[s\]/\[c\]
--   The reciprocal of this is **performance**.
+-   If you have a computer, run a program, and then measure the time that it takes for this program to finish -- you have measured the response time.  
+	- This can be used as a benchmark to compare one computer against another.  
+	- As a benchmark it is not a very clear signal of speed, because different computers can handle different kinds of tasks better and worse.  
+		- One computer with a better GPU than another, but an inferior CPU, might be able to run a game more smoothly while taking longer to run a program that makes significant use of recursion, for instance.  
 
 ------------------------------------------------------------------------
 
-## Throughput
+# Throughput
 
--   Another way to measure the speed of a computer is the number of tasks performed in unit time. This is called **throughput**.
--   But this is just the inverse (i.e. reciprocal) of the previous measurement. It has units \[c\]/\[s\]!
--   The textbook suggests, indirectly, that there is a deeper difference between throughput and response rate, but they don't quite communicate what that distinction is.
--   For most computer scientists, though, the textbook's definition is not the right way to define throughput.
-    -   The word "throughput" is usually meant as a measure of data flow over a network and not a single computer.
-    -   Therefore, yes, there is a big difference in response time and throughput -- but the textbook does not make this clear, or doesn't make it it clear in the right way.
+-   Another way to measure the speed of a computer is the total number of tasks that it performs in unit time.  
+-   Imagine a server receiving many requests for different tasks.  If you set a clock, and then measure the number of requests that it's able to process in some fixed amount of time, this measures its throughput.  
+-   If a server adds extra processors in order to handle more requests simultaneously, it can increase throughout without necessarily increasing response rate, because any one request may still get processed by some particular processor at the same speed.  
 
 ------------------------------------------------------------------------
 
 # Comparing Performance
 
-The ways to compare performance are just the obvious ones. You can compute the difference in their performance, or you can take their ratio.
+Suppose that computer $A$ has twice the response time as computer $B$.  We might describe this by the equation 
 
-The book calls this latter the **relative performance** One computer is twice as fast as another one, if $$\frac A B = 2$$
+$$ 
+T_A = 2T_B 
+$$
 
-where *A* is the performance of the first computer and *B* is the performance of the second.
+which is equivalent to 
 
-It might help to realize that this equation is equivalent to $A = 2B$ so that this more literally "says" that *A* is twice *B*.
+$$ 
+\frac{T_A}{T_B} = 2 
+$$
+
+Since response time is the reciprocal of performance, if we say that performacne is $P_A$ and $P_B$ respectively, then 
+
+$$ 
+\frac 1 {P_A} = 2\frac 1 {P_B} 
+$$ 
+
+which is equivalent to either of the following
+
+$$ 
+\frac{P_B}{P_A} = 2, \quad P_B = 2P_A
+$$
+
+In short, if $A$ has twice the response time then $B$ has twice the performance.
 
 ------------------------------------------------------------------------
 
@@ -74,17 +88,15 @@ It might help to realize that this equation is equivalent to $A = 2B$ so that th
 
 -   A single processor may be trying to perform computations for several different programs.
 
-    -   Suppose there are three programs A, B, C. If the computer is trying to make all three simultaneously useful then it may compute tasks from each in a cycle: A, B, C, A, B, C, ...
+    -   Suppose there are three programs A, B, C. If the computer is trying to make all three simultaneously useful, then it may compute tasks from each in a cycle: A, B, C, A, B, C, ...
 
-    -   In some cases, it can make more sense for the processor to give one program more computations than another, so that instead it computes something more like A, C, A, B, C, A, A, B, ... in whatever sequence the processor has deemed optimal.
+    -   In some cases, it can make more sense for the processor to give one program more frequent computations than another, so that instead it computes something more like A, C, A, B, C, A, A, B, ... 
 
-    -   Therefore measuring the time that the computer takes to perform the tasks demanded by program A, cannot be easily and purely measured.
+    -   Therefore it is not easy to get a pure measurement of response time since the computer is not purely using its resources on a single task.  
 
-        -   You cannot merely run a task for program A, and measure the time until it completes. The elapsed time from the start to the end of the task, will include time spent by the processor performing tasks for B and C.
+-   It's not always clear to the user, which programs are running. Sometimes the processor is busy with moving memory around, sometimes the operating system is performing necessary functions, hidden to the user.
 
--   It's not always clear to the user, which programs are running. Sometimes the processor is busy with moving memory around, sometimes the operating system is performing necessary functions hidden to the user.
-
-    -   Therefore one cannot fix this problem merely by shutting down all other visible programs before running the text.
+    -   Therefore one cannot fix this problem merely by shutting down all other visible programs before running the text -- there will often still be invisible tasks, and blocking them may make the computer unusable.
 
 ------------------------------------------------------------------------
 
@@ -102,30 +114,35 @@ It might help to realize that this equation is equivalent to $A = 2B$ so that th
 
 # The Processor Clock
 
--   Almost every processor has a built-in clock that ticks out at a reliable rate -- often somewhere in the range of 250 picoseconds. Call this time the **clock cycle** and denote it by the symbol *t*.
+-   Processors in fact work by running "pulses" of electricity through the chips.  Each pulse causes a sequence computations to take place inside, called a **clock cycle**.  The faster these pulses happen, the faster the computer runs.  
 
--   The computer cannot measure time directly, but can measure the number of ticks that go by during the run of the program. Say that $n$ is the number of ticks during the run of a program.
+-   One limitation on the speed of the computer, is the fact that these pulses of electricity generate heat.  
 
--   Then the elapsed time, *e*, for a program is\
-    $$e = nt$$
+	-   If the pulses take place too quickly and the chip cannot dissipate heat fast enough, then the chips can be damaged by the heat.  
+
+-   The **clock rate** or of the computer is the time between these pulses, often in the range of 250 picoseconds.  
+
+-   Suppose a task requires $n$ clock cycles to finish, and each clock cycle takes $t$ units of time.  Then the response time $e$ is related to $n$ and $t$ by
+
+	$$
+	e = nt
+	$$
+
+-   Since $t$ is the time per clock cycle, then its reciprocal $1/t$ is the number of cycles per unit time -- that is to say, $1/t$ is the clock rate.
 
 ------------------------------------------------------------------------
 
 # Instruction Performance
 
--   If you want to compare two computers, it can make sense to see which one performs instructions faster -- after all, a program just is a sequence of instructions.
+-   If you want to compare two computers, it can make sense to see which one performs *instructions* faster -- after all, a program just is a sequence of instructions!
 
--   Therefore let us form an equation which uses the average clock cycles per instruction (**CPI**).
+-   Therefore let us form an equation which uses the average clock cycles per instruction (**CPI**).  Let $n$ be the number of clock cycles performed during a task and $i$ the number of instructions requested by that task.  Then
 
     $$ \frac n i = (CPI) $$
-
-    where as before $n$ is the number of clock cycles. $i$ is the number of instructions a program gives during its run, and of course $(CPI)$ is the cycles per instruction.
 
 -   This equation is equivalent to $$n = i (CPI)$$
 
     which is the version given in the textbook (but with different names for variables).
-
--   For a fixed program, $i$ will not change. But for two different computers, the $(CPI)$ is a useful indicator of which one is faster.
 
 ------------------------------------------------------------------------
 
